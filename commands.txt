@@ -1,0 +1,8 @@
+
+project start
+php artisan serve
+
+db migrate 
+php artisan migrate
+
+ 

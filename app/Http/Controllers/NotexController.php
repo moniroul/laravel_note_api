@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 
-class NotesController extends Controller
+class NotexController extends Controller
 {
     // Retrieve all notes
     public function index()
     {
-        return Note::all();
+        $note = Note::all();
+
+        return response()->json(['status' =>  true, "message" => "Success", "data" => $note], 200);
     }
 
     // Retrieve a single note
@@ -27,10 +28,10 @@ class NotesController extends Controller
             'title' => 'required|string|max:255',
             'note' => 'required|string',
         ]);
-
+ 
         $note = Note::create($validatedData);
 
-        return response()->json($note, 201);
+        return response()->json(['status' =>  true, "message" => "Success", "data" => $note], 201);
     }
 
     // Update an existing note
