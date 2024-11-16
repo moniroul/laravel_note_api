@@ -7,7 +7,9 @@ Route::get('/', function () {
     return ['Server' => 'Server starting ....'];;
 });
 
-Route::get('/notes/search', [NotexController::class, 'queryNote']); 
+
+
+Route::get('/notes/search', [NotexController::class, 'queryNote']);   
 Route::get('/notes', [NotexController::class, 'index']);
 Route::get('/notes/{id}', [NotexController::class, 'show']);
 Route::post('/notes/add', [NotexController::class, 'store']);

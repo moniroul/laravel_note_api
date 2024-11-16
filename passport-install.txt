@@ -1,0 +1,22 @@
+1 => composer require laravel/passport
+
+2 => php artisan install:api --passport
+
+3 => update User Model   use HasApiTokens, HasFactory, Notifiable;
+
+4 => /config/auth.php update 
+
+ 'api' => [
+            'driver' => 'passport',
+            'provider' => 'users',
+        ],
+
+
+5 => app/provide/appServiceProvide
+
+    public function boot(): void
+    {
+        Passport::tokensExpireIn(now()->addDay(1));
+        Passport::refreshTokensExpireIn(now()->addDays(30));
+        // Passport::personalAccessTokensExpireIn(now()->addMonths(6));
+    }

@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Validator;
 class NotexController extends Controller
 {
     // Retrieve all notes
-    public function index()
+    public function index(Request $request)
+
     {
-        $notes = Note::latest()->paginate(10);
+
+        $PerPage = $request->query('perpage');  
+        $notes = Note::latest()->paginate($PerPage ?? 10);
         return response()->json($notes);
     }
 
@@ -19,9 +22,8 @@ class NotexController extends Controller
     // Retrieve a single note
     public function show($id)
     {
-
         try {
-            return Note::findOrFail($id);
+            return response()->json(['status' => 'success', 'data' => Note::findOrFail($id)], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -37,6 +39,7 @@ class NotexController extends Controller
     {
 
         $query = $request->query('query');
+
         if (empty($query)) {
             return response()->json([
                 'status' => 'error',
@@ -47,7 +50,6 @@ class NotexController extends Controller
                 ->orWhere('note', 'LIKE', "%{$query}%")
                 ->latest()
                 ->paginate(10);
-
             return response()->json($notes);
         }
     }
@@ -57,10 +59,13 @@ class NotexController extends Controller
     public function store(Request $request)
     {
         try {
+
+
             $validator = Validator::make($request->all(), [
                 'title' => 'required|string|max:255',
                 'note' => 'required|string',
             ]);
+
 
             if ($validator->fails()) {
                 return response()->json([
@@ -68,6 +73,7 @@ class NotexController extends Controller
                     'errors' => $validator->errors()
                 ], 422);
             }
+
             $note = Note::create($request->all());
 
             return response()->json($note, 201);
@@ -112,7 +118,6 @@ class NotexController extends Controller
     public function destroy($id)
     {
         try {
-
             $res =  Note::destroy($id);
             if ($res == 0) {
                 return response()->json([
