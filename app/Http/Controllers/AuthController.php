@@ -30,7 +30,7 @@ class AuthController extends Controller
         ]);
 
         $token = $user->createToken('authToken');
-        $token->token->expires_at = now()->addMinute(2);
+        $token->token->expires_at = now()->addDays(2);
         $token->token->save();
 
 
@@ -47,7 +47,7 @@ class AuthController extends Controller
         }
 
         $token = Auth::user()->createToken('authToken');
-        $token->token->expires_at = now()->addMinute(2);
+        $token->token->expires_at = now()->addDays(2);
         $token->token->save();
 
         return response()->json(['user' => Auth::user(), 'token' => $token->accessToken], 200);
