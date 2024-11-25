@@ -21,12 +21,13 @@ class PostController extends Controller
 
             $post = Auth::guard('api')->user()->posts()->create($validated);
 
+
             // Attach tags to the post
             if (!empty($validated['tags'])) {
                 $post->tags()->attach($validated['tags']);
             }
 
-            return response()->json($post->load('tags'));
+            return response()->json($post->load(['tags', 'user', 'comments']));
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
         };
@@ -34,6 +35,7 @@ class PostController extends Controller
 
     public function index()
     {
+
         return Post::with('user', 'comments', 'tags')->latest()->paginate(10);
     }
 }

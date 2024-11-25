@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('postcode');
             $table->string('number');
             $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
