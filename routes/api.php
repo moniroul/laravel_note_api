@@ -16,7 +16,7 @@ Route::get('/', function () {
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::middleware([CheckApiToken::class])->group(function () {
+// Route::middleware([CheckApiToken::class])->group(function () {
 
     // Authentication
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -43,4 +43,4 @@ Route::middleware([CheckApiToken::class])->group(function () {
 
     Route::get('/tags', [TagController::class, 'index']);
     Route::post('/tags', [TagController::class, 'store']);
-});
+// });

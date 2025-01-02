@@ -9,10 +9,11 @@ use Illuminate\Support\Facades\Validator;
 class NotexController extends Controller
 {
     // Retrieve all notes
+
+
     public function index(Request $request)
 
     {
-
         $PerPage = $request->query('perpage');  
         $notes = Note::latest()->paginate($PerPage ?? 10);
         return response()->json($notes);
